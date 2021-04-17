@@ -8,8 +8,6 @@
   <meta name="description" content="The music app">
   <meta name="author" content="Guido Percú">
 
-  <link rel="stylesheet" href="css/styles.css?v=1.0">
-
 </head>
 
 <body>
@@ -18,12 +16,15 @@
         <p>Category: <input v-model="category" /></p>
         <button v-on:click="generatePlaylist">Generate Playlist</button>
         <div id="playlist">
-            {{ playlist }}
+            {{ artist }} <br>
+            {{ song }} <br>
+            {{ lyrics }} <br>
             {{ category }}
         </div>
     </div>
       
     <script src="https://unpkg.com/vue@next"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <script src="main.js"></script>
 </body>
 </html>

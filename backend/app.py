@@ -21,7 +21,7 @@ def search(lyrics: str) -> str:
         track_list = r.json().get('message').get('body').get('track_list')
 
         musics = {}
-        for track in track_list:
+        for track in track_list[0:1]:
             music = track.get('track')
             lyrics_request_url = "track.lyrics.get?format=json&callback=callback&quorum_factor=1&apikey={}&track_id=".format(MUSIX_API_KEY)
             lyrics_request = "{}{}{}".format(BASE_MUSIC_URL, lyrics_request_url, music.get('track_id'))
