@@ -16,15 +16,24 @@ def search(lyrics: str) -> str:
     base_request = "track.search?format=json&callback=callback&quorum_factor=1&apikey={}&q_lyrics=".format(MUSIX_API_KEY)
     music_request = "{}{}{}".format(BASE_MUSIC_URL, base_request, lyrics)
     
-    response = {"track_1": {}, "track_2": {}}
     try:
         r = requests.get(music_request)
         track_list = r.json().get('message').get('body').get('track_list')
 
-        response['track_1'] = track_list[0]
-        response['track_2'] = track_list[1]
+        musics = {}
+        for track in track_list:
+            music = track.get('track')
+            lyrics_request_url = "track.lyrics.get?format=json&callback=callback&quorum_factor=1&apikey={}&track_id=".format(MUSIX_API_KEY)
+            lyrics_request = "{}{}{}".format(BASE_MUSIC_URL, lyrics_request_url, music.get('track_id'))
+            r = requests.get(lyrics_request)
+            lyrics_track = r.json().get('message').get('body').get('lyrics').get('lyrics_body')
 
-        return response
+            musics['track_1'] = {
+                'track_name': music.get('track_name'),
+                'lyrics': lyrics_track,
+                'artist_name': music.get('artist_name')
+            }
+
+        return musics
     except:
         return 'Error requesting track list, try again later'
-    
