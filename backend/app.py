@@ -13,8 +13,18 @@ def hello_world():
 
 @app.route('/track/search/<lyrics>')
 def search(lyrics: str) -> str:
-    base_request = "track.search?format=jsonp&callback=callback&quorum_factor=1&apikey={}&q_lyrics=".format(MUSIX_API_KEY)
+    base_request = "track.search?format=json&callback=callback&quorum_factor=1&apikey={}&q_lyrics=".format(MUSIX_API_KEY)
     music_request = "{}{}{}".format(BASE_MUSIC_URL, base_request, lyrics)
+    
+    response = {"track_1": {}, "track_2": {}}
+    try:
+        r = requests.get(music_request)
+        track_list = r.json().get('message').get('body').get('track_list')
 
-    r = requests.get(music_request)
-    return r.content
+        response['track_1'] = track_list[0]
+        response['track_2'] = track_list[1]
+
+        return response
+    except:
+        return 'Error requesting track list, try again later'
+    
