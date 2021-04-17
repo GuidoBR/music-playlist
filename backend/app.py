@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 import requests
 import os
 
@@ -28,12 +28,15 @@ def search(lyrics: str) -> str:
             r = requests.get(lyrics_request)
             lyrics_track = r.json().get('message').get('body').get('lyrics').get('lyrics_body')
 
-            musics['track_1'] = {
+            musics['track'] = {
                 'track_name': music.get('track_name'),
                 'lyrics': lyrics_track,
                 'artist_name': music.get('artist_name')
             }
 
-        return musics
+        response = jsonify(musics)
+        # Enable Access-Control-Allow-Origin
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        return response
     except:
         return 'Error requesting track list, try again later'
