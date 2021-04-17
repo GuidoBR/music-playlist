@@ -7,24 +7,36 @@
   <title>The Music App</title>
   <meta name="description" content="The music app">
   <meta name="author" content="Guido Percú">
-
+  <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
 <body>
 
     <div id="app">
         <p>Category: <input v-model="category" /></p>
-        <button v-on:click="generatePlaylist">Generate Playlist</button>
-        <div id="playlist">
-            {{ artist }} <br>
-            {{ song }} <br>
-            {{ lyrics }} <br>
-            {{ category }}
+          <button class="mdc-button mdc-button--outlined" v-on:click="generatePlaylist">
+            <span class="mdc-button__ripple"></span>
+            <i class="material-icons mdc-button__icon" aria-hidden="true">bookmark</i>
+            <span class="mdc-button__label">Generate Playlist</span>
+          </button>
+        <hr>
+
+            <div class="mdc-card mdc-card--outlined" v-for="music in playlist">
+                  <h2>{{ music.track_name}}</h2>
+                  <h3>{{ music.artist_name }}</h3>
+
+                  <p>{{ music.lyrics }}</p>
+            </div>
+
         </div>
     </div>
+
+
       
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
