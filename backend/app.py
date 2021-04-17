@@ -13,6 +13,8 @@ def hello_world():
 
 @app.route('/track/search/<lyrics>')
 def search(lyrics: str) -> str:
-    base_request = "track.search?format=jsonp&callback=callback&quorum_factor=1&apikey={}&q_lyrics".format(MUSIX_API_KEY)
-    r = requests.get("{}{}".format(BASE_MUSIC_URL, base_request, lyrics))
+    base_request = "track.search?format=jsonp&callback=callback&quorum_factor=1&apikey={}&q_lyrics=".format(MUSIX_API_KEY)
+    music_request = "{}{}{}".format(BASE_MUSIC_URL, base_request, lyrics)
+
+    r = requests.get(music_request)
     return r.content
