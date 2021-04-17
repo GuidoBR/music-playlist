@@ -13,6 +13,17 @@
 </head>
 
 <body>
-  
+
+    <div id="app">
+        <p>Category: <input v-model="category" /></p>
+        <button v-on:click="generatePlaylist">Generate Playlist</button>
+        <div id="playlist">
+            {{ playlist }}
+            {{ category }}
+        </div>
+    </div>
+      
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="main.js"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 # Music API Example
 
-## Installation
+## Backend - Install and run
 
 ```
 pip install -r requirements.txt
@@ -8,6 +8,12 @@ export FLASK_APP=app.py
 export MUSIX_API_KEY=<API_KEY>
 cd backend
 flask run
+```
+
+## Frontend - run
+
+```
+python -m http.server
 ```
 
 ## Example requests
