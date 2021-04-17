@@ -12,7 +12,7 @@ flask run
 
 ## Example requests
 curl -s 127.0.0.1:5000/track/search/despacito
-
+curl -s 127.0.0.1:500/track/search/garota%20de%20ipanema
 ## More information on the external API
 
 https://playground.musixmatch.com/
