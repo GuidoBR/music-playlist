@@ -33,22 +33,30 @@ def get_music_information(lyrics: str, position: int):
     }
 
 def get_tracks(lyrics: str):
-    try:
-        base_request = "track.search?format=json&callback=callback&quorum_factor=1&apikey={}&q_lyrics=".format(MUSIX_API_KEY)
-        music_request = "{}{}{}".format(BASE_MUSIC_URL, base_request, lyrics)
-        r = requests.get(music_request)
-        track_list = r.json().get('message').get('body').get('track_list')
+    request = {
+        'name': "track.search",
+        'format': "json",
+        'callback': "callback",
+        "api_key": MUSIX_API_KEY,
+        "query": "q_lyrics",
+        "query_value": lyrics
+    }
+    request_url = "{}{}?format={}&callback={}&apikey={}&{}={}".format(
+        BASE_MUSIC_URL,
+        request['name'], request['format'], request['callback'], request['api_key'],
+        request['query'], request['query_value']
+    )
+    
+    r = requests.get(request_url)
+    track_list = r.json().get('message').get('body').get('track_list')
 
-        return track_list
-    except:
-        return 'Error requesting track list, try again later'
+    return track_list
 
 def get_lyrics(track_id: int):
     request = {
         'name': "track.lyrics.get",
         'format': "json",
         'callback': "callback",
-        "quorum_factor": 1,
         "api_key": MUSIX_API_KEY,
         "query": "track_id",
         "query_value": track_id
