@@ -44,9 +44,31 @@ def get_tracks(lyrics: str):
         return 'Error requesting track list, try again later'
 
 def get_lyrics(track_id: int):
-    lyrics_request_url = "track.lyrics.get?format=json&callback=callback&quorum_factor=1&apikey={}&track_id=".format(MUSIX_API_KEY)
-    lyrics_request = "{}{}{}".format(BASE_MUSIC_URL, lyrics_request_url, track_id)
-    r = requests.get(lyrics_request)
-    lyrics_track = r.json().get('message').get('body').get('lyrics').get('lyrics_body')
+    request = {
+        'name': "track.lyrics.get",
+        'format': "json",
+        'callback': "callback",
+        "quorum_factor": 1,
+        "api_key": MUSIX_API_KEY,
+        "query": "track_id",
+        "query_value": track_id
+    }
+    request_url = "{}{}?format={}&callback={}&apikey={}&{}={}".format(
+        BASE_MUSIC_URL,
+        request['name'], request['format'], request['callback'], request['api_key'],
+        request['query'], request['query_value']
+    )
 
-    return lyrics_track
+    r = requests.get(request_url)
+
+    if (get_status_code(r) != 200):
+        print('Error getting lyrics - {} - {}'.format(get_status_code(r), request_url))
+        return ''
+
+    return r.json().get('message').get('body').get('lyrics').get('lyrics_body')
+
+def get_status_code(request):
+    return request.json().get('message').get('header').get('status_code')
+
+
+
