@@ -32,7 +32,7 @@ class TestApp(unittest.TestCase):
             ]
         mock_lyrics.return_value = "Mr. Sandman Mr. Sandman Mr. Sandman, bring me a dream Make her complexion like pictures in green Give her two lips like roses and clover Then tell me that my lonesome nights are over Sandman, I'm so alone Don't have nobody to call my own Please turn on your magic beam Mr. Sandman, bring me a dream Mr. Sandman, bring me a dream ... ******* This Lyrics is NOT for Commercial use ******* (1409619881554)"
         
-        music = app.get_music_information('Sandman')
+        music = app.get_music_information('Sandman', 0)
         self.assertEqual(music.get('lyrics'), mock_lyrics.return_value)
         self.assertEqual(music.get('track_name'), mock_tracks.return_value[0].get("track").get("track_name"))
         self.assertEqual(music.get('artist_name'), mock_tracks.return_value[0].get("track").get("artist_name"))
