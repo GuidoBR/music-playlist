@@ -32,7 +32,7 @@
                 <div class="card-body">
                   <h5 class="card-title">{{ music.track_name}} <span class="badge bg-info text-dark">{{ music.artist_name }}</span></h5>
                   <p class="card-text">{{ music.lyrics }}</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <a v-bind:href='music.url' class="btn btn-success">Complete Lyrics</a>
                 </div>
             </div>
         </div>

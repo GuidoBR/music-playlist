@@ -31,7 +31,8 @@ def get_music_information(lyrics: str):
     return {
         'track_name': music.get('track_name'),
         'lyrics': get_lyrics(music.get('track_id')),
-        'artist_name': music.get('artist_name')
+        'artist_name': music.get('artist_name'),
+        'url': music.get('track_share_url')
     }
 
 def get_tracks(lyrics: str):
