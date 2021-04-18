@@ -33,50 +33,42 @@ def get_music_information(lyrics: str, position: int):
     }
 
 def get_tracks(lyrics: str):
-    request = {
-        'name': "track.search",
-        'format': "json",
-        'callback': "callback",
-        "api_key": MUSIX_API_KEY,
-        "query": "q_lyrics",
-        "query_value": lyrics
-    }
-    request_url = "{}{}?format={}&callback={}&apikey={}&{}={}".format(
-        BASE_MUSIC_URL,
-        request['name'], request['format'], request['callback'], request['api_key'],
-        request['query'], request['query_value']
-    )
-    
+    request_url = get_request_url("track.search", "q_lyrics", lyrics)
     r = requests.get(request_url)
-    track_list = r.json().get('message').get('body').get('track_list')
+    if (get_status_code(r) != 200):
+        print('Error: {} - {}'.format(get_status_code(r), request_url))
+        return ''
 
+    track_list = r.json().get('message').get('body').get('track_list')
     return track_list
 
 def get_lyrics(track_id: int):
-    request = {
-        'name': "track.lyrics.get",
-        'format': "json",
-        'callback': "callback",
-        "api_key": MUSIX_API_KEY,
-        "query": "track_id",
-        "query_value": track_id
-    }
-    request_url = "{}{}?format={}&callback={}&apikey={}&{}={}".format(
-        BASE_MUSIC_URL,
-        request['name'], request['format'], request['callback'], request['api_key'],
-        request['query'], request['query_value']
-    )
-
+    request_url = get_request_url("track.lyrics.get", "track_id", track_id)
     r = requests.get(request_url)
 
     if (get_status_code(r) != 200):
-        print('Error getting lyrics - {} - {}'.format(get_status_code(r), request_url))
+        print('Error: {} - {}'.format(get_status_code(r), request_url))
         return ''
 
     return r.json().get('message').get('body').get('lyrics').get('lyrics_body')
 
-def get_status_code(request):
+def get_status_code(request: dict):
     return request.json().get('message').get('header').get('status_code')
+
+def get_request_url(method_name: string, query: string, query_value: any) -> str:
+    prepare_request = {
+        'method_name': method_name,
+        'format': "json",
+        'callback': "callback",
+        "api_key": MUSIX_API_KEY,
+        "query": query,
+        "query_value": query_value
+    }
+    return "{}{}?format={}&callback={}&apikey={}&{}={}".format(
+        BASE_MUSIC_URL,
+        prepare_request['method_name'], prepare_request['format'], prepare_request['callback'], prepare_request['api_key'],
+        prepare_request['query'], prepare_request['query_value']
+    )
 
 
 
