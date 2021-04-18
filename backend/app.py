@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 import requests
 import random
 import os
+import string
 
 app = Flask(__name__)
 
@@ -13,7 +14,7 @@ def search(lyrics: str) -> str:
     musics = {'musics': []}
 
     musics['musics'].append(get_music_information(lyrics))
-    random_lyrics = get_random_word(musics['musics'][0].get('lyrics'))
+    random_lyrics = get_random_line(musics['musics'][0].get('lyrics'))
     musics['musics'].append(get_music_information(random_lyrics))
 
     response = jsonify(musics)
@@ -21,12 +22,18 @@ def search(lyrics: str) -> str:
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
-def get_random_word(lyrics_body: str):
-    return random.choice(lyrics_body.split())
+def get_random_line(lyrics_body: str):
+    table = str.maketrans(dict.fromkeys(string.punctuation))
+    clean_lyrics = lyrics_body.translate(table)
+
+    lines = clean_lyrics.split("\n")
+    clean_lines = [line.strip(' ') for line in lines]
+
+
+    return random.choice(clean_lines)
 
 def get_music_information(lyrics: str):
     track_list = get_tracks(lyrics)
-    # import ipdb ; ipdb.set_trace()
     music = track_list[0].get('track')
 
     return {
