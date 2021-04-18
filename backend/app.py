@@ -26,6 +26,7 @@ def get_random_word(lyrics_body: str):
 
 def get_music_information(lyrics: str):
     track_list = get_tracks(lyrics)
+    # import ipdb ; ipdb.set_trace()
     music = track_list[0].get('track')
 
     return {
