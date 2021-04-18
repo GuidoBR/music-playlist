@@ -11,10 +11,7 @@ MUSIX_API_KEY = os.environ.get('MUSIX_API_KEY')
 
 @app.route('/track/search/<lyrics>')
 def search(lyrics: str) -> str:
-    musics = {'musics': []}
-
-    musics['musics'].append(get_music_information(lyrics, 0))
-    musics['musics'].append(get_music_information(lyrics, 1))
+    musics = {'musics': [get_music_information(lyrics, 0), get_music_information(lyrics, 1)]}
 
     response = jsonify(musics)
     # Enable Access-Control-Allow-Origin
