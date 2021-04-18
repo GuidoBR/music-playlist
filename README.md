@@ -1,5 +1,7 @@
 # Music API Example
 
+![music-app](/home/guido/Projects/music-playlist/music-app.gif)
+
 ## Backend - Install and run
 
 ```
@@ -23,4 +25,4 @@ curl -s 127.0.0.1:500/track/search/garota%20de%20ipanema
 ```
 ## More information on the external API
 
-https://playground.musixmatch.com/
+[MusixMatch](https://playground.musixmatch.com/)
