@@ -2,7 +2,7 @@ const App = {
     el: '#app',
     data() {
       return {
-        category: "Sandman",
+        category: "All You Need is Love",
         playlist: [],
       }
     },
