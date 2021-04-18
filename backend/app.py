@@ -13,28 +13,17 @@ MUSIX_API_KEY = os.environ.get('MUSIX_API_KEY')
 def search(lyrics: str) -> str:
     musics = {'musics': []}
 
-    musics['musics'].append(get_music_information(lyrics))
-    random_lyrics = get_random_line(musics['musics'][0].get('lyrics'))
-    musics['musics'].append(get_music_information(random_lyrics))
+    musics['musics'].append(get_music_information(lyrics, 0))
+    musics['musics'].append(get_music_information(lyrics, 1))
 
     response = jsonify(musics)
     # Enable Access-Control-Allow-Origin
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
 
-def get_random_line(lyrics_body: str):
-    table = str.maketrans(dict.fromkeys(string.punctuation))
-    clean_lyrics = lyrics_body.translate(table)
-
-    lines = clean_lyrics.split("\n")
-    clean_lines = [line.strip(' ') for line in lines]
-
-
-    return random.choice(clean_lines)
-
-def get_music_information(lyrics: str):
+def get_music_information(lyrics: str, position: int):
     track_list = get_tracks(lyrics)
-    music = track_list[0].get('track')
+    music = track_list[position].get('track')
 
     return {
         'track_name': music.get('track_name'),

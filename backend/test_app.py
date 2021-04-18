@@ -6,9 +6,6 @@ from unittest.mock import MagicMock, patch
 
 class TestApp(unittest.TestCase):
 
-    def test_get_random_line_returns_word_from_list(self):
-        self.assertIn(app.get_random_line('String with words !#$\n Test'), ['String with words', 'Test'])
-
     @patch('app.get_lyrics')
     @patch('app.get_tracks')
     def test_get_music_information_returns_expected_information(self, mock_tracks, mock_lyrics):
