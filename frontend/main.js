@@ -16,7 +16,6 @@ const App = {
             new_first_song = this.playlist[1]
             lyrics = new_first_song.lyrics
             this.category = this.selectRandomWord(lyrics)
-            console.log(this.category)
             this.playlist = [new_first_song]
             
             axios
@@ -38,7 +37,6 @@ const App = {
             // remove copyright and number at the end of lyrics
             words_from_song.splice(-2) 
 
-            console.log(words_from_song)
             return words_from_song[Math.floor(Math.random() * words_from_song.length)]
         },
     }
