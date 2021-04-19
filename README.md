@@ -27,7 +27,7 @@ python -m http.server
 ## Example requests
 ```
 curl -s 127.0.0.1:5000/track/search/despacito
-curl -s 127.0.0.1:500/track/search/garota%20de%20ipanema
+curl -s 127.0.0.1:5000/track/search/garota%20de%20ipanema
 ```
 ## More information on the external API
 
