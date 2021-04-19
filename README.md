@@ -1,6 +1,6 @@
 # Music API Example
 
-![music-app](/home/guido/Projects/music-playlist/music-app.gif)
+![Gif displaying the application](music-app.gif)
 
 ## Backend - Install and run
 
