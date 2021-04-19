@@ -11,6 +11,34 @@ MUSIX_API_KEY = os.environ.get('MUSIX_API_KEY')
 
 @app.route('/track/search/<lyrics>')
 def search(lyrics: str) -> str:
+    """Fetches music information from a MusixMatch.
+
+    Retrieves rows pertaining to the given keys from the Table instance
+    represented by table_handle.  String keys will be UTF-8 encoded.
+
+    Args:
+        lyrics: Keywords for search inside music lyrics.
+
+    Returns:
+        A json mapping with information for two songs. For example:
+
+        {
+            "musics":
+            [
+                {
+                    "artist_name": "AVID All Stars",
+                    "lyrics":"All you need is love\nAll you need is love\nAll you need is love, love\nLove is all you need\n,
+                    "track_name":"All You Need Is Love (In the Style of the Beatles)",
+                    "url":"https://www.musixmatch.com/lyrics/AVID-All-Stars/All-You-Need-Is-Love-In-the-Style-of-the-Beatles?utm_source=application&utm_campaign=api&utm_medium=Draper+AI%3A1409619881554"},
+                {
+                    "artist_name":"Mardie",
+                    "lyrics":"All I need is love (radio Edit 90s)\n\nAll I need is love\nAll I need is love, uh yeah\n\nAll I need is love\n",
+                    "track_name":"All I need is love",
+                    "url":"https://www.musixmatch.com/lyrics/Mardie/All-I-need-is-love?utm_source=application&utm_campaign=api&utm_medium=Draper+AI%3A1409619881554"
+                }
+            ]
+        }
+    """
     musics = {'musics': [get_music_information(lyrics, 0), get_music_information(lyrics, 1)]}
 
     response = jsonify(musics)

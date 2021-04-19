@@ -12,6 +12,12 @@ cd backend
 flask run
 ```
 
+### Tests
+
+```
+python backend/test_app.py
+```
+
 ## Frontend - run
 
 ```
