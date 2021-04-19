@@ -38,5 +38,20 @@ class TestApp(unittest.TestCase):
         self.assertEqual(music.get('artist_name'), mock_tracks.return_value[0].get("track").get("artist_name"))
         self.assertEqual(music.get('url'), mock_tracks.return_value[0].get("track").get("track_share_url"))
 
+    @patch('app.get_music_information')
+    def test_search(self, mock_music):
+        with app.app.app_context():
+            mock_music.return_value = {
+                'track_name': "Mister Sandman (In the Style of the Four Aces) [Karaoke Version]",
+                'lyrics': "Mr. Sandman Mr. Sandman Mr. Sandman, bring me a dream Make her complexion like pictures in green Give her two lips like roses and clover Then tell me that my lonesome nights are over Sandman, I'm so alone Don't have nobody to call my own Please turn on your magic beam Mr. Sandman, bring me a dream Mr. Sandman, bring me a dream ... ******* This Lyrics is NOT for Commercial use ******* (1409619881554)",
+                'artist_name': "Jamie C feat. Hollywood Luck",
+                'url': "https:\/\/www.musixmatch.com\/lyrics\/Jamie-C-feat-Hollywood-Luck\/Thank-God-Its-Friday-TGIF?utm_source=application&utm_campaign=api&utm_medium=Draper+AI%3A1409619881554"
+            }
+
+            response = app.search('Sandman')
+            search = json.loads(response.get_data())
+            self.assertEqual(search.get('musics')[0].get('track_name'), mock_music.return_value['track_name'])
+            self.assertEqual(search.get('musics')[0].get('lyrics'), mock_music.return_value['lyrics'])
+
 if __name__ == '__main__':
     unittest.main()
