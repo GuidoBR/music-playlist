@@ -1,8 +1,6 @@
 from flask import Flask, jsonify
 import requests
-import random
 import os
-import string
 
 app = Flask(__name__)
 
@@ -80,7 +78,7 @@ def get_lyrics(track_id: int):
 def get_status_code(request: dict):
     return request.json().get('message').get('header').get('status_code')
 
-def get_request_url(method_name: string, query: string, query_value: any) -> str:
+def get_request_url(method_name: str, query: str, query_value: any) -> str:
     prepare_request = {
         'method_name': method_name,
         'format': "json",
